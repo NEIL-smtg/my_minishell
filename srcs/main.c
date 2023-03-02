@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 19:21:37 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/02 19:11:32 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/02 23:01:30 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	process_line(t_shell *info)
 	cmd_line = ft_split(info->cmd_line, 32);
 	if (!ft_strncmp("echo", cmd_line[0], 5))
 		ft_echo(info, cmd_line);
-	// else if (!ft_strncmp("cd", cmd_line[0], 3))
-	// 	ft_cd(info);
+	else if (!ft_strncmp("cd", cmd_line[0], 3))
+		ft_cd(info, cmd_line);
 	else if (!ft_strncmp("pwd", cmd_line[0], 4))
 		ft_pwd(info, cmd_line);
 	else if (!ft_strncmp("export", cmd_line[0], 7))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 19:22:17 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/02 20:00:22 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/02 23:02:05 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_export(t_shell *info, char **cmd);
 void	ft_env(t_shell *info, char **cmd);
 void	ft_echo(t_shell *info, char **cmd);
 void	ft_unset(t_shell *info, char **cmd);
+void	ft_cd(t_shell *info, char **cmd);
 
 //utils
 void	ft_free2d(char **str);
