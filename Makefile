@@ -1,5 +1,5 @@
 NAME		=	minishell
-MAN_FILES	=	main utils ft_simple_cmd ft_echo
+MAN_FILES	=	main utils ft_simple_cmd ft_echo ft_export
 SRC_DIR		=	srcs/
 OBJS_DIR	=	objs/
 LIBFT_DIR	=	Libft/
@@ -14,7 +14,7 @@ FSAN		=	-fsanitize=address -g3
 
 all:
 	@mkdir -p $(OBJS_DIR)
-	@make libft
+	@make $(LIBFT_DIR)$(LIBFT)
 	@make $(NAME)
 
 $(OBJS_DIR)%.o: $(SRC_DIR)%.c
@@ -23,7 +23,7 @@ $(OBJS_DIR)%.o: $(SRC_DIR)%.c
 $(NAME): $(OBJS)
 	$(GCC) $(FSAN) $(CFLAGS) $(OBJS) $(LIBFT_DIR)$(LIBFT) $(RL) -o $(NAME)
 
-libft:
+$(LIBFT_DIR)$(LIBFT):
 	@make -C $(LIBFT_DIR)
 
 clean:

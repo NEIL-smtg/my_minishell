@@ -3,40 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
+/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/02 00:44:34 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/02 05:10:14 by suchua           ###   ########.fr       */
+/*   Created: 2023/03/02 15:31:44 by suchua            #+#    #+#             */
+/*   Updated: 2023/03/02 17:56:49 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_close_quote(char *str, int start)
-{
-	int	i;
-
-	i = start;
-	while (i >= 0)
-	{
-		--i;
-	}
-}
-
-int	var_exist(char *var, char **env)
+int	var_exist(char *str, char **env)
 {
 	int		i;
 	char	*tmp;
 	int		len;
 
 	i = 0;
-	while (var[i] >= 'A' && var[i] <= 'Z')
+	while (str[i] >= 'A' && str[i] <= 'Z')
 		++i;
-	if (var[i] != 34 && var[i] != 39 && var[i])
-		return (0);
-	tmp = ft_strdup(var);
+	tmp = ft_strdup(str);
 	tmp[i] = 0;
-	len = i;
+	len = ft_strlen(tmp);
 	i = 0;
 	while (ft_strncmp(tmp, env[i], len))
 		++i;
@@ -44,26 +31,43 @@ int	var_exist(char *var, char **env)
 	if (!env[i])
 		return (0);
 	ft_putstr_fd(env[i] + len + 1, 1);
-	return (1);
+	return (len);
 }
 
-int	handle_word_by_word(char *str, char **env)
+int	print_till_quote(char *s, char **env, char quote)
+{
+	int		i;
+	char	another;
+
+	i = 0;
+	if (quote == 34)
+		another = 39;
+	else
+		another = 34;
+	while (s[i] && s[i] != quote)
+	{
+		if (s[i] == '$' && another == 39 && quote == 34)
+			i += var_exist(&s[i + 1], env);
+		else
+			write(1, &s[i], 1);
+		++i;
+	}
+	return (i + 1);
+}
+
+static void	process_line(char *str, char **env)
 {
 	int		i;
 
-	i = 0;
-	if (!check_close_quote(str))
-		return (0);
-	while (str[i])
+	i = -1;
+	while (str[++i])
 	{
-		if (str[i] == '$' && var_exist(&str[i + 1], env))
-		{
-			++i;
-			while (str[i] && ft_isalpha(str[i]))
-				++i;
-		}
+		if (str[i] == 34 || str[i] == 39)
+			i += print_till_quote(&str[i + 1], env, str[i]);
+		else if (str[i] == '$')
+			i += var_exist(&str[i + 1], env);
 		else
-			write(1, &str[i++], 1);
+			write(1, &str[i], 1);
 	}
 }
 
@@ -81,15 +85,11 @@ void	ft_echo(t_shell *info, char **cmd)
 			flag = 1;
 			continue ;
 		}
-		if (!handle_word_by_word(cmd[i], info->ms_env))
-		{
-			ft_putendl_fd("Unclose quote", 2);
-			return (0);
-		}
-		ft_putchar_fd(' ', 1);
+		process_line(cmd[i], info->ms_env);
+		if (cmd[i + 1])
+			write(1, " ", 1);
 	}
-	if (!flag)
-		write(1, "\n", 1);
-	else
+	if (flag)
 		write(1, "%%", 1);
+	write(1, "\n", 1);
 }

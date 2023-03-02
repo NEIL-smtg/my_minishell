@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
+/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 19:21:37 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/02 02:08:32 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/02 19:11:32 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	process_line(t_shell *info)
 		ft_pwd(info, cmd_line);
 	else if (!ft_strncmp("export", cmd_line[0], 7))
 		ft_export(info, cmd_line);
-	// else if (!ft_strncmp("unset", cmd_line[0], 6))
-	// 	ft_unset(info);
+	else if (!ft_strncmp("unset", cmd_line[0], 6))
+		ft_unset(info, cmd_line);
 	else if (!ft_strncmp("env", cmd_line[0], 4))
 		ft_env(info, cmd_line);
 	else if (!ft_strncmp("exit", cmd_line[0], 5))

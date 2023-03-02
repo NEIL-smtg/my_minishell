@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
+/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 20:34:38 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/02 01:56:47 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/02 19:06:27 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,13 @@ void	free_everything(t_shell *info)
 	free(info->cmd_line);
 	ft_free2d(info->ms_env);
 	free(info->ms_prompt);
+}
+
+void	swap_str(char **s1, char **s2)
+{
+	char	*tmp;
+
+	tmp = *s1;
+	*s1 = *s2;
+	*s2 = tmp;
 }
