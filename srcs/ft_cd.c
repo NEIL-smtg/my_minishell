@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
+/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 22:59:57 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/02 23:30:34 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/03 21:38:25 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,7 @@ int	update_pwd(char *pwd, char *type, char **env)
 
 	if (!ft_strncmp("..", type, 3))
 	{
-		j = ft_strlen(pwd);
-		while (j >= 0 && pwd[--j] != '/')
-			pwd[j] = 0;
-		if (pwd[j] != '/')
-			return (0);
+		
  	}
 	else if (!ft_strncmp("~", type, 2))
 	{
