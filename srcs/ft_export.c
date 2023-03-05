@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:42:03 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/02 20:48:50 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/05 01:45:43 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,5 @@ void	ft_export(t_shell *info, char **cmd)
 	}
 	else
 		export_to_env(info, cmd[1]);
+	info->ms_status = 0;
 }

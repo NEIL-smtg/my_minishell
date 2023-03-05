@@ -6,7 +6,7 @@
 /*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 19:21:37 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/02 23:01:30 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/06 01:50:20 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	init(t_shell *info, char **env)
 	ms = "@minishell->";
 	info->ms_prompt = ft_strjoin(user, ms);
 	info->ms_env = ft_2d_strdup(env);
+	info->ms_status = 0;
 }
 
 void	process_line(t_shell *info)
 {
 	char	**cmd_line;
 
-	info->ms_status = 0;
 	cmd_line = ft_split(info->cmd_line, 32);
 	if (!ft_strncmp("echo", cmd_line[0], 5))
 		ft_echo(info, cmd_line);
@@ -43,6 +43,8 @@ void	process_line(t_shell *info)
 		ft_env(info, cmd_line);
 	else if (!ft_strncmp("exit", cmd_line[0], 5))
 		exit(EXIT_SUCCESS);
+	else if (cmd_exist(info, cmd_line))
+		execute_cmd(info, cmd_line);
 	else
 	{
 		info->ms_status = 127;
@@ -58,14 +60,16 @@ int	main(int ac, char **av, char **env)
 	init(&info, env);
 	while (1)
 	{
+		info.add_history_req = 1;
 		info.cmd_line = readline(info.ms_prompt);
 		if (!*(info.cmd_line))
 		{
 			free(info.cmd_line);
 			continue ;
 		}
-		add_history(info.cmd_line);
 		process_line(&info);
+		if (info.add_history_req)
+			add_history(info.cmd_line);
 		free(info.cmd_line);
 	}
 	free_everything(&info);

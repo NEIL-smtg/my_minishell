@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 19:22:17 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/03 21:59:07 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/06 02:06:59 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <dirent.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 # define PRINT 1
 
@@ -27,6 +29,7 @@ typedef struct s_shell
 	char	**ms_env;
 	char	*cmd_line;
 	int		ms_status;
+	int		add_history_req;
 }	t_shell;
 
 //simple cmd
@@ -37,11 +40,16 @@ void	ft_echo(t_shell *info, char **cmd);
 void	ft_unset(t_shell *info, char **cmd);
 void	ft_cd(t_shell *info, char **cmd);
 
+//execve
+int		cmd_exist(t_shell *info, char **cmd);
+void	execute_cmd(t_shell *info, char **cmd);
+
 //utils
 void	ft_free2d(char **str);
 void	error_msg(t_shell *info, char *cmd, char *error_arg);
 void	free_everything(t_shell *info);
 int		ft_isspace(char c);
 void	swap_str(char **s1, char **s2);
+int		delimiter_exist(char *cmd);
 
 #endif

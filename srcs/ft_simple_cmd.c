@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_simple_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:36:55 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/02 20:50:46 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/05 01:46:16 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_pwd(t_shell *info, char **cmd)
 	while (ft_strncmp("PWD=", info->ms_env[i], 4))
 		++i;
 	ft_putendl_fd(info->ms_env[i] + 4, 1);
+	info->ms_status = 0;
 }
 
 void	ft_env(t_shell *info, char **cmd)
@@ -39,6 +40,7 @@ void	ft_env(t_shell *info, char **cmd)
 	i = -1;
 	while (info->ms_env[++i])
 		ft_putendl_fd(info->ms_env[i], 1);
+	info->ms_status = 0;
 }
 
 char	**remove_var_from_env(int j, char **env)
@@ -86,4 +88,5 @@ void	ft_unset(t_shell *info, char **cmd)
 	new_env = remove_var_from_env(i, info->ms_env);
 	ft_free2d(info->ms_env);
 	info->ms_env = new_env;
+	info->ms_status = 0;
 }

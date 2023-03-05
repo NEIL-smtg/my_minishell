@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:31:44 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/02 17:56:49 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/05 01:45:29 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_cmd_status(int status)
+{
+	char	nb;
+
+	if (status >= 10)
+	{
+		print_cmd_status(status / 10);
+		print_cmd_status(status % 10);
+	}
+	else
+	{
+		nb = status + '0';
+		write(1, &nb, 1);
+	}
+}
 
 int	var_exist(char *str, char **env)
 {
@@ -18,6 +34,8 @@ int	var_exist(char *str, char **env)
 	char	*tmp;
 	int		len;
 
+	if (*str == 0)
+		return (0);
 	i = 0;
 	while (str[i] >= 'A' && str[i] <= 'Z')
 		++i;
@@ -31,10 +49,10 @@ int	var_exist(char *str, char **env)
 	if (!env[i])
 		return (0);
 	ft_putstr_fd(env[i] + len + 1, 1);
-	return (len);
+	return (len + 1);
 }
 
-int	print_till_quote(char *s, char **env, char quote)
+int	print_till_quote(char *s, t_shell *info, char quote)
 {
 	int		i;
 	char	another;
@@ -46,28 +64,37 @@ int	print_till_quote(char *s, char **env, char quote)
 		another = 34;
 	while (s[i] && s[i] != quote)
 	{
-		if (s[i] == '$' && another == 39 && quote == 34)
-			i += var_exist(&s[i + 1], env);
+		if (!ft_strncmp("$?", &s[i], 2))
+		{
+			print_cmd_status(info->ms_status);
+			i += 2;
+		}
+		else if (s[i] == '$' && another == 39 && quote == 34)
+			i += var_exist(&s[i + 1], info->ms_env);
 		else
-			write(1, &s[i], 1);
-		++i;
+			write(1, &s[i++], 1);
 	}
 	return (i + 1);
 }
 
-static void	process_line(char *str, char **env)
+static void	process_line(char *str, t_shell *info)
 {
 	int		i;
 
-	i = -1;
-	while (str[++i])
+	i = 0;
+	while (str[i])
 	{
-		if (str[i] == 34 || str[i] == 39)
-			i += print_till_quote(&str[i + 1], env, str[i]);
+		if (!ft_strncmp("$?", &str[i], 2))
+		{
+			print_cmd_status(info->ms_status);
+			i += 2;
+		}
+		else if (str[i] == 34 || str[i] == 39)
+			i += print_till_quote(&str[i + 1], info, str[i]);
 		else if (str[i] == '$')
-			i += var_exist(&str[i + 1], env);
+			i += var_exist(&str[i + 1], info->ms_env);
 		else
-			write(1, &str[i], 1);
+			write(1, &str[i++], 1);
 	}
 }
 
@@ -85,11 +112,12 @@ void	ft_echo(t_shell *info, char **cmd)
 			flag = 1;
 			continue ;
 		}
-		process_line(cmd[i], info->ms_env);
+		process_line(cmd[i], info);
 		if (cmd[i + 1])
 			write(1, " ", 1);
 	}
 	if (flag)
 		write(1, "%%", 1);
 	write(1, "\n", 1);
+	info->ms_status = 0;
 }
