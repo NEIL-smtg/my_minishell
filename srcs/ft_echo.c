@@ -6,27 +6,11 @@
 /*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:31:44 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/05 01:45:29 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/08 01:17:03 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_cmd_status(int status)
-{
-	char	nb;
-
-	if (status >= 10)
-	{
-		print_cmd_status(status / 10);
-		print_cmd_status(status % 10);
-	}
-	else
-	{
-		nb = status + '0';
-		write(1, &nb, 1);
-	}
-}
 
 int	var_exist(char *str, char **env)
 {
@@ -66,7 +50,7 @@ int	print_till_quote(char *s, t_shell *info, char quote)
 	{
 		if (!ft_strncmp("$?", &s[i], 2))
 		{
-			print_cmd_status(info->ms_status);
+			ft_putnbr_fd(info->ms_status, 1);
 			i += 2;
 		}
 		else if (s[i] == '$' && another == 39 && quote == 34)
@@ -86,7 +70,7 @@ static void	process_line(char *str, t_shell *info)
 	{
 		if (!ft_strncmp("$?", &str[i], 2))
 		{
-			print_cmd_status(info->ms_status);
+			ft_putnbr_fd(info->ms_status, 1);
 			i += 2;
 		}
 		else if (str[i] == 34 || str[i] == 39)
@@ -118,6 +102,5 @@ void	ft_echo(t_shell *info, char **cmd)
 	}
 	if (flag)
 		write(1, "%%", 1);
-	write(1, "\n", 1);
 	info->ms_status = 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 19:22:17 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/07 20:11:30 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/08 01:28:50 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
-# define PRINT 1
+# define R2 1
+# define R1 2
+# define L2 3
+# define L3 4
 
 typedef struct s_shell
 {
@@ -54,6 +57,7 @@ int		ft_isspace(char c);
 void	swap_str(char **s1, char **s2);
 int		get_2d_arr_size(char **s);
 char	*get_cmd_path(char *cmd);
-
+void	exit_the_program(char **cmds);
+int		is_redir(char *cmd);
 
 #endif

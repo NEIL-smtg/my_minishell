@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manually_handle_cmd.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 01:50:10 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/07 20:12:12 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/08 01:44:44 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,16 @@ char	*get_cmd_path(char *cmd)
 	return (NULL);
 }
 
-
-static int	self_implement(t_shell *info)
+static int	self_implement(t_shell *info, char **cmd_line)
 {
-	char	**cmd_line;
+	int	flag;
 
-	cmd_line = ft_split(info->cmd_line, 32);
+	flag = 0;
 	if (!ft_strncmp("echo", cmd_line[0], 5))
 		ft_echo(info, cmd_line);
 	else if (!ft_strncmp("cd", cmd_line[0], 3))
 		ft_cd(info, cmd_line);
-	else if (!ft_strncmp("pwd", cmd_line[0], 4))
+	if (!ft_strncmp("pwd", cmd_line[0], 4))
 		ft_pwd(info, cmd_line);
 	else if (!ft_strncmp("export", cmd_line[0], 7))
 		ft_export(info, cmd_line);
@@ -53,13 +52,11 @@ static int	self_implement(t_shell *info)
 		ft_unset(info, cmd_line);
 	else if (!ft_strncmp("env", cmd_line[0], 4))
 		ft_env(info, cmd_line);
-	else if (!ft_strncmp("exit", cmd_line[0], 5))
-		exit(EXIT_SUCCESS);
 	else
-	{
-		ft_free2d(cmd_line);
+		flag = 1;
+	ft_free2d(cmd_line);
+	if (flag)
 		return (0);
-	}
 	return (1);
 }
 
@@ -68,6 +65,7 @@ void	child_exec(t_shell *info, char **cmds)
 	char	**s_cmd;
 	char	*cmd_path;
 
+	redirections(is_redir(cmds[0]), info, cmds[0]);
 	if (info->prev_fd != -1)
 	{
 		dup2(info->prev_fd, 0);
@@ -77,7 +75,7 @@ void	child_exec(t_shell *info, char **cmds)
 		dup2(info->fd[1], 1);
 	close(info->fd[0]);
 	close(info->fd[1]);
-	if (!self_implement(info))
+	if (!self_implement(info, ft_split(cmds[0], 32)))
 	{
 		s_cmd = ft_split(cmds[0], 32);
 		cmd_path = get_cmd_path(s_cmd[0]);
@@ -85,6 +83,8 @@ void	child_exec(t_shell *info, char **cmds)
 		free(cmd_path);
 		ft_free2d(s_cmd);
 	}
+	else
+		exit(EXIT_SUCCESS);
 }
 
 void	execute_cmd(t_shell *info)
@@ -96,6 +96,8 @@ void	execute_cmd(t_shell *info)
 	i = -1;
 	info->prev_fd = -1;
 	cmds = ft_split(info->cmd_line, '|');
+	if (!ft_strncmp(cmds[0], "exit", 5))
+		exit_the_program(cmds);
 	while (++i < get_2d_arr_size(cmds))
 	{
 		if (pipe(info->fd) == -1)

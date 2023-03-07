@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 19:21:37 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/07 20:11:41 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/08 00:06:48 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	main(int ac, char **av, char **env)
 			free(info.cmd_line);
 			continue ;
 		}
-		// process_line(&info);
 		execute_cmd(&info);
 		if (info.add_history_req)
 			add_history(info.cmd_line);

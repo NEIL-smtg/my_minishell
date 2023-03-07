@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_simple_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:36:55 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/07 20:16:05 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/08 00:26:45 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,10 @@
 
 void	ft_pwd(t_shell *info, char **cmd)
 {
-	int	i;
+	char	pwd[4096];
 
-	if (cmd[1])
-	{
-		error_msg(info, "pwd", cmd[1]);
-		return ;
-	}
-	i = 0;
-	while (ft_strncmp("PWD=", info->ms_env[i], 4))
-		++i;
-	ft_putendl_fd(info->ms_env[i] + 4, 1);
+	getcwd(pwd, sizeof(pwd));
+	ft_putendl_fd(pwd, 1);
 	info->ms_status = 0;
 }
 
