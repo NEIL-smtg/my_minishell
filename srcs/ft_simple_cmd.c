@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_simple_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
+/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:36:55 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/05 01:46:16 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/07 20:16:05 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@ void	ft_env(t_shell *info, char **cmd)
 {
 	int	i;
 
-	if (cmd[1])
-	{
-		error_msg(info, "env", cmd[1]);
-		return ;
-	}
 	i = -1;
 	while (info->ms_env[++i])
 		ft_putendl_fd(info->ms_env[i], 1);
@@ -74,11 +69,6 @@ void	ft_unset(t_shell *info, char **cmd)
 	int		i;
 	char	**new_env;
 
-	if (cmd[2])
-	{
-		error_msg(info, "unset", cmd[1]);
-		return ;
-	}
 	i = 0;
 	while (info->ms_env[i]
 		&& ft_strncmp(cmd[1], info->ms_env[i], ft_strlen(cmd[1])))
