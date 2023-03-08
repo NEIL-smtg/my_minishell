@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_2d_strjoin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 18:01:22 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/08 18:04:48 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/09 01:46:38 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
 int	get_strs_len(char **s, int size, char *sep)
 {
@@ -21,7 +21,7 @@ int	get_strs_len(char **s, int size, char *sep)
 	i = -1;
 	while (++i < size)
 		n += ft_strlen(s[i]);
-	n += (size - 1) * len(sep) + 1;
+	n += (size - 1) * ft_strlen(sep) + 1;
 	return (n);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 20:34:38 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/02 19:06:27 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/09 02:08:25 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_free2d(char **str)
 void	error_msg(t_shell *info, char *cmd, char *error_arg)
 {
 	info->ms_status = 127;
-	printf("%s: '%s': No such file or directory\n", cmd, error_arg);
+	printf("%s: %s: No such file or directory\n", cmd, error_arg);
 }
 
 void	free_everything(t_shell *info)

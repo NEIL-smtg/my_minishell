@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 19:22:17 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/08 17:45:09 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/09 02:31:29 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_shell
 {
 	char	*ms_prompt;
 	char	**ms_env;
+	char	*input_line;
 	char	*cmd_line;
 	int		ms_status;
 	int		add_history_req;
@@ -59,6 +60,6 @@ int		get_2d_arr_size(char **s);
 char	*get_cmd_path(char *cmd);
 void	exit_the_program(char **cmds);
 int		is_redir(char *cmd);
-void	filter_cmd_line(t_shell *info);
+void	filter_input_line(t_shell *info);
 
 #endif

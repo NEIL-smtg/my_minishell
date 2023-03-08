@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 19:21:37 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/08 19:34:22 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/09 02:32:28 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,18 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		info.add_history_req = 1;
-		info.cmd_line = readline(info.ms_prompt);
-		if (!*(info.cmd_line))
+		info.input_line = readline(info.ms_prompt);
+		if (!*(info.input_line))
 		{
-			free(info.cmd_line);
+			free(info.input_line);
 			continue ;
 		}
-		if (ft_strncmp("echo ", info.cmd_line, 5))
-			filter_cmd_line(&info);
+		filter_input_line(&info);
 		if (info.add_history_req)
-			add_history(info.cmd_line);
+			add_history(info.input_line);
 		execute_cmd(&info);
+		free(info.input_line);
 		free(info.cmd_line);
 	}
-	free_everything(&info);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:31:44 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/08 17:21:56 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/09 02:45:32 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,29 +36,35 @@ int	var_exist(char *str, char **env)
 	return (len + 1);
 }
 
-int	print_till_quote(char *s, t_shell *info, char quote)
+int	put_str_quote(char *s, char q)
 {
 	int		i;
-	char	another;
 
 	i = 0;
+	ft_putchar_fd(s[i++], 1);
+	while (s[i] && s[i] != q)
+		ft_putchar_fd(s[i++], 1);
+	if (s[i] == q)
+		ft_putchar_fd(s[i++], 1);
+	return (i);
+}
+
+int	print_till_quote(char *s, t_shell *info, char quote)
+{
+	int		len;
+	char	another;
+
+	another = 34;
 	if (quote == 34)
 		another = 39;
+	if (quote == 34 && another == 39)
+		len = put_str_quote(s, quote);
 	else
-		another = 34;
-	while (s[i] && s[i] != quote)
 	{
-		if (!ft_strncmp("$?", &s[i], 2))
-		{
-			ft_putnbr_fd(info->ms_status, 1);
-			i += 2;
-		}
-		else if (s[i] == '$' && another == 39 && quote == 34)
-			i += var_exist(&s[i + 1], info->ms_env);
-		else
-			write(1, &s[i++], 1);
+		ft_putchar_fd(quote, 1);
+		len = 1;
 	}
-	return (i + 1);
+	return (len);
 }
 
 static void	process_line(char *str, t_shell *info)
@@ -74,7 +80,7 @@ static void	process_line(char *str, t_shell *info)
 			i += 2;
 		}
 		else if (str[i] == 34 || str[i] == 39)
-			i += print_till_quote(&str[i + 1], info, str[i]);
+			i += print_till_quote(&str[i], info, str[i]);
 		else if (str[i] == '$')
 			i += var_exist(&str[i + 1], info->ms_env);
 		else

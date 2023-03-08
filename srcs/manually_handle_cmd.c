@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manually_handle_cmd.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 01:50:10 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/08 17:33:56 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/09 02:54:35 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*get_cmd_path(char *cmd)
 	char	**path;
 
 	i = -1;
+	if (!access(cmd, F_OK))
+		return (cmd);
 	path = ft_split(getenv("PATH"), ':');
 	while (path[++i])
 	{
@@ -82,8 +84,8 @@ void	child_exec(t_shell *info, char **cmds)
 		s_cmd = ft_split(cmds[0], 32);
 		cmd_path = get_cmd_path(s_cmd[0]);
 		execve(cmd_path, s_cmd, info->ms_env);
-		free(cmd_path);
-		ft_free2d(s_cmd);
+		error_msg(info, s_cmd[0], "Command not found.");
+		exit(EXIT_FAILURE);
 	}
 	else
 		exit(EXIT_SUCCESS);
