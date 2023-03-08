@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
+/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 14:01:42 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/01 20:08:44 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:05:02 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,13 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 //gnl
 char	*get_next_line(int fd);
+char	*gnl_strjoin(char *line, char *partial);
 
 //printf
 int		ft_printf(const char *format, ...);
 
 //new
+char	*ft_2d_strjoin(int size, char **strs, char *sep);
 char	*ft_strjoin_free(char *s1, char *s2);
 char	**ft_2d_strdup(char **src);
 

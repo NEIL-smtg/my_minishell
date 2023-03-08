@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
+/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:31:44 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/08 01:17:03 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/08 17:21:56 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ static void	process_line(char *str, t_shell *info)
 
 void	ft_echo(t_shell *info, char **cmd)
 {
-	int	flag;
-	int	i;
+	int		flag;
+	int		i;
 
 	flag = 0;
 	i = 0;
@@ -102,5 +102,6 @@ void	ft_echo(t_shell *info, char **cmd)
 	}
 	if (flag)
 		write(1, "%%", 1);
+	write(1, "\n", 1);
 	info->ms_status = 0;
 }

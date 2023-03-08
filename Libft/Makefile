@@ -6,7 +6,7 @@
 #    By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 12:01:03 by suchua            #+#    #+#              #
-#    Updated: 2023/01/10 19:16:09 by suchua           ###   ########.fr        #
+#    Updated: 2023/03/08 18:17:29 by suchua           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC    	=    ft_mem/ft_memset.c \
 	ft_str/ft_strlcpy.c \
 	ft_str/ft_strlcat.c \
 	ft_str/ft_strnstr.c \
+	ft_str/ft_2d_strjoin.c \
 	ft_atoitoa/ft_atoi.c \
 	ft_mem/ft_calloc.c \
 	ft_str/ft_strdup.c \
@@ -82,3 +83,6 @@ fclean:    clean
 re:
 	@make fclean
 	@make all
+
+norm:
+	@norminette -R CheckForbiddenSourceHeader $(SRCS)

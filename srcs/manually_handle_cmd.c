@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manually_handle_cmd.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
+/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 01:50:10 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/08 01:44:44 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/08 17:33:56 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	self_implement(t_shell *info, char **cmd_line)
 		ft_echo(info, cmd_line);
 	else if (!ft_strncmp("cd", cmd_line[0], 3))
 		ft_cd(info, cmd_line);
-	if (!ft_strncmp("pwd", cmd_line[0], 4))
+	else if (!ft_strncmp("pwd", cmd_line[0], 4))
 		ft_pwd(info, cmd_line);
 	else if (!ft_strncmp("export", cmd_line[0], 7))
 		ft_export(info, cmd_line);
@@ -64,14 +64,16 @@ void	child_exec(t_shell *info, char **cmds)
 {
 	char	**s_cmd;
 	char	*cmd_path;
+	char	*nxt_cmd;
 
-	redirections(is_redir(cmds[0]), info, cmds[0]);
+	// redirections(is_redir(cmds[0]), info, cmds[0]);
+	nxt_cmd = cmds[1];
 	if (info->prev_fd != -1)
 	{
 		dup2(info->prev_fd, 0);
 		close(info->prev_fd);
 	}
-	if (cmds[1])
+	if (nxt_cmd)
 		dup2(info->fd[1], 1);
 	close(info->fd[0]);
 	close(info->fd[1]);

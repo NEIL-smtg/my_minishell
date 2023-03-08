@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
+/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 17:28:23 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/01 20:01:54 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:00:43 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 char	*ft_strjoin_free(char *s1, char *s2)
 {
 	char	*s;
+
 	s = ft_strjoin(s1, s2);
 	free(s1);
 	return (s);

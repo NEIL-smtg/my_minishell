@@ -40,3 +40,4 @@ re:
 
 norm:
 	@norminette -R CheckForbiddenSourceHeader $(SRCS)
+	@make norm $(LIBFT_DIR)
