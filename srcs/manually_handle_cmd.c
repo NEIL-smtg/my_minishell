@@ -6,7 +6,7 @@
 /*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 01:50:10 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/09 19:25:11 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/10 03:03:59 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,29 @@ char	*get_cmd_path(char *cmd)
 	return (NULL);
 }
 
-static int	self_implement(t_shell *info, char **cmd_line)
+static int	self_implement(t_shell *info, char **s_cmd)
 {
 	int	flag;
 
-	flag = 0;		
-	if (!ft_strncmp("echo", cmd_line[0], 5))
-		ft_echo(info, cmd_line);
-	else if (!ft_strncmp("cd", cmd_line[0], 3))
-		ft_cd(info, cmd_line);
-	else if (!ft_strncmp("pwd", cmd_line[0], 4))
-		ft_pwd(info, cmd_line);
-	else if (!ft_strncmp("export", cmd_line[0], 7))
-		ft_export(info, cmd_line);
-	else if (!ft_strncmp("unset", cmd_line[0], 6))
-		ft_unset(info, cmd_line);
-	else if (!ft_strncmp("env", cmd_line[0], 4))
-		ft_env(info, cmd_line);
-	else if (!ft_contain_redir(info, cmd_line))
-		flag = 1;
+	flag = 1;		
+	if (!ft_strncmp("echo ", s_cmd[0], 5))
+		ft_echo(info, s_cmd);
+	else if (!ft_strncmp("cd ", s_cmd[0], 3))
+		ft_cd(info, s_cmd);
+	else if (!ft_strncmp("pwd ", s_cmd[0], 4))
+		ft_pwd(info, s_cmd);
+	else if (!ft_strncmp("export ", s_cmd[0], 7))
+		ft_export(info, s_cmd);
+	else if (!ft_strncmp("unset ", s_cmd[0], 6))
+		ft_unset(info, s_cmd);
+	else if (!ft_strncmp("env ", s_cmd[0], 4))
+		ft_env(info, s_cmd);
+	else if (!ft_contain_redir(info, s_cmd))
+		flag = 0;
 	else
-		flag = 1;
-	ft_free2d(cmd_line);
-	return (!flag);
+		flag = 0;
+	ft_free2d(s_cmd);
+	return (flag);
 }
 
 void	child_exec(t_shell *info, char **cmds)
@@ -83,7 +83,7 @@ void	child_exec(t_shell *info, char **cmds)
 	s_cmd = ft_split(cmds[0], 32);
 	cmd_path = get_cmd_path(s_cmd[0]);
 	execve(cmd_path, s_cmd, info->ms_env);
-	error_msg(info, s_cmd[0], "Command not found.");
+	error_msg(info, s_cmd[0], "Command not found");
 	exit(EXIT_FAILURE);
 }
 
@@ -95,7 +95,7 @@ void	execute_cmd(t_shell *info)
 
 	i = -1;
 	info->prev_fd = -1;
-	cmds = ft_split(info->cmd_line, '|');
+	cmds = ft_smart_split(info->input_line);
 	if (!ft_strncmp(cmds[0], "exit", 5))
 		exit_the_program(cmds);
 	while (++i < get_2d_arr_size(cmds))

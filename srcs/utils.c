@@ -6,7 +6,7 @@
 /*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 20:34:38 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/09 02:08:25 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/10 02:49:10 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,19 @@ void	ft_free2d(char **str)
 
 void	error_msg(t_shell *info, char *cmd, char *error_arg)
 {
+	char	*str;
+
 	info->ms_status = 127;
-	printf("%s: %s: No such file or directory\n", cmd, error_arg);
+	str = ": No such file or directory\n";
+	write(STDOUT_FILENO, cmd, ft_strlen(cmd));
+	write(STDOUT_FILENO, ": ", 2);
+	write(STDOUT_FILENO, error_arg, ft_strlen(error_arg));
+	write(STDOUT_FILENO, str, ft_strlen(str));
 }
 
 void	free_everything(t_shell *info)
 {
-	free(info->cmd_line);
+	free(info->input_line);
 	ft_free2d(info->ms_env);
 	free(info->ms_prompt);
 }

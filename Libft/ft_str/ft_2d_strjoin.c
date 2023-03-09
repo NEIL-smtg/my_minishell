@@ -6,7 +6,7 @@
 /*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 18:01:22 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/09 01:46:38 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/10 01:29:34 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	get_strs_len(char **s, int size, char *sep)
 	return (n);
 }
 
-void	concat(char *tab, char *sep)
+static void	ft_concat(char *tab, char *sep)
 {
 	int	i;
 	int	j;
@@ -56,9 +56,9 @@ char	*ft_2d_strjoin(int size, char **strs, char *sep)
 	i = -1;
 	while (++i < size)
 	{
-		concat(tab, strs[i]);
+		ft_concat(tab, strs[i]);
 		if (i != size - 1)
-			concat(tab, sep);
+			ft_concat(tab, sep);
 	}
 	return (tab);
 }

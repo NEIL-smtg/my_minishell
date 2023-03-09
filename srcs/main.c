@@ -6,7 +6,7 @@
 /*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 19:21:37 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/09 02:32:28 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/10 02:49:25 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,10 @@ int	main(int ac, char **av, char **env)
 			free(info.input_line);
 			continue ;
 		}
-		filter_input_line(&info);
 		if (info.add_history_req)
 			add_history(info.input_line);
 		execute_cmd(&info);
 		free(info.input_line);
-		free(info.cmd_line);
 	}
 	return (0);
 }
