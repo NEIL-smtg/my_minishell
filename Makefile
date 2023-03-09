@@ -1,6 +1,6 @@
 NAME		=	minishell
 MAN_FILES	=	main utils utils2 ft_simple_cmd ft_echo ft_export ft_cd \
-				manually_handle_cmd
+				manually_handle_cmd ft_redirections
 SRC_DIR		=	srcs/
 OBJS_DIR	=	objs/
 LIBFT_DIR	=	Libft/

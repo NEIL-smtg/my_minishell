@@ -6,7 +6,7 @@
 /*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 16:13:23 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/01 20:11:23 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/09 19:44:03 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,21 @@ char	**ft_2d_strdup(char **src)
 		return (NULL);
 	i = -1;
 	while (++i < row)
+		new[i] = ft_strdup(src[i]);
+	new[i] = 0;
+	return (new);
+}
+
+char	**ft_2d_strndup(char **src, int n)
+{
+	char	**new;
+	int		i;
+
+	new = malloc(sizeof(char *) * (n + 1));
+	if (!new)
+		return (NULL);
+	i = -1;
+	while (++i < n)
 		new[i] = ft_strdup(src[i]);
 	new[i] = 0;
 	return (new);

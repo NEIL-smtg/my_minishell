@@ -6,7 +6,7 @@
 /*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 01:50:10 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/09 02:54:35 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/09 19:25:11 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	self_implement(t_shell *info, char **cmd_line)
 {
 	int	flag;
 
-	flag = 0;
+	flag = 0;		
 	if (!ft_strncmp("echo", cmd_line[0], 5))
 		ft_echo(info, cmd_line);
 	else if (!ft_strncmp("cd", cmd_line[0], 3))
@@ -54,12 +54,12 @@ static int	self_implement(t_shell *info, char **cmd_line)
 		ft_unset(info, cmd_line);
 	else if (!ft_strncmp("env", cmd_line[0], 4))
 		ft_env(info, cmd_line);
+	else if (!ft_contain_redir(info, cmd_line))
+		flag = 1;
 	else
 		flag = 1;
 	ft_free2d(cmd_line);
-	if (flag)
-		return (0);
-	return (1);
+	return (!flag);
 }
 
 void	child_exec(t_shell *info, char **cmds)
@@ -68,7 +68,6 @@ void	child_exec(t_shell *info, char **cmds)
 	char	*cmd_path;
 	char	*nxt_cmd;
 
-	// redirections(is_redir(cmds[0]), info, cmds[0]);
 	nxt_cmd = cmds[1];
 	if (info->prev_fd != -1)
 	{
@@ -79,16 +78,13 @@ void	child_exec(t_shell *info, char **cmds)
 		dup2(info->fd[1], 1);
 	close(info->fd[0]);
 	close(info->fd[1]);
-	if (!self_implement(info, ft_split(cmds[0], 32)))
-	{
-		s_cmd = ft_split(cmds[0], 32);
-		cmd_path = get_cmd_path(s_cmd[0]);
-		execve(cmd_path, s_cmd, info->ms_env);
-		error_msg(info, s_cmd[0], "Command not found.");
-		exit(EXIT_FAILURE);
-	}
-	else
+	if (self_implement(info, ft_split(cmds[0], 32)))
 		exit(EXIT_SUCCESS);
+	s_cmd = ft_split(cmds[0], 32);
+	cmd_path = get_cmd_path(s_cmd[0]);
+	execve(cmd_path, s_cmd, info->ms_env);
+	error_msg(info, s_cmd[0], "Command not found.");
+	exit(EXIT_FAILURE);
 }
 
 void	execute_cmd(t_shell *info)
