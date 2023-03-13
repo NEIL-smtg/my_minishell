@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
+/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 19:22:17 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/10 02:58:57 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/13 22:41:54 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ typedef struct s_shell
 	char	*input_line;
 	int		ms_status;
 	int		add_history_req;
-	int		fd[2];
-	int		prev_fd;
+	int		**fd;
+	int		infile;
+	int		outfile;
 }	t_shell;
 
 //simple cmd
@@ -46,11 +47,7 @@ void	ft_unset(t_shell *info, char **cmd);
 void	ft_cd(t_shell *info, char **cmd);
 
 //redirection
-int	ft_contain_redir(t_shell *info, char **cmd);
-
-//execve
-int		cmd_exist(t_shell *info, char **cmd);
-void	execute_cmd(t_shell *info);
+int		ft_contain_redir(t_shell *info, char **cmd);
 
 //utils
 void	ft_free2d(char **str);
@@ -59,12 +56,17 @@ void	free_everything(t_shell *info);
 int		ft_isspace(char c);
 void	swap_str(char **s1, char **s2);
 int		get_2d_arr_size(char **s);
-char	*get_cmd_path(char *cmd);
-void	exit_the_program(char **cmds);
-int		is_redir(char *cmd);
 
 //smart split for pipe
 char	**ft_smart_split(char *str);
 char	**remove_space_quote(char **str);
+
+//execve
+void	ft_handle_cmd(t_shell *info);
+
+//execve utils
+void	close_all_pipe(t_shell *info, int n_pipe);
+void	init_pipe_fd(t_shell *info, int size);
+char	*get_cmd_path(char *cmd);
 
 #endif

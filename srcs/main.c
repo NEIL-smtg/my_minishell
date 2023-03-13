@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
+/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 19:21:37 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/10 02:49:25 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/13 22:47:12 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	init(t_shell *info, char **env)
 	info->ms_prompt = ft_strjoin(user, ms);
 	info->ms_env = ft_2d_strdup(env);
 	info->ms_status = 0;
+	info->infile = -1;
+	info->outfile = -1;
 }
 
 int	main(int ac, char **av, char **env)
@@ -40,7 +42,7 @@ int	main(int ac, char **av, char **env)
 		}
 		if (info.add_history_req)
 			add_history(info.input_line);
-		execute_cmd(&info);
+		ft_handle_cmd(&info);
 		free(info.input_line);
 	}
 	return (0);

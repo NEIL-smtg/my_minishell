@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
+/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 01:55:59 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/10 02:47:52 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/13 22:41:24 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,4 @@ int	get_2d_arr_size(char **s)
 	while (s[i])
 		++i;
 	return (i);
-}
-
-void	exit_the_program(char **cmds)
-{
-	ft_free2d(cmds);
-	exit(EXIT_SUCCESS);
 }
