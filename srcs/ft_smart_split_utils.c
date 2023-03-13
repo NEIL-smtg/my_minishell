@@ -6,7 +6,7 @@
 /*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 01:24:12 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/10 02:48:29 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/14 04:33:50 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,40 @@ char	*remove_quote(char *str)
 
 char	*filter_quote(char *str)
 {
-	int	i;
-
-	i = 0;
-	if (!ft_strncmp("echo", &str[i], 4))
+	if (!ft_strncmp("echo ", str, 5))
 		return (str);
 	if (close_quote(str))
 		return (remove_quote(str));
 	return (str);
 }
 
-char	**remove_space_quote(char **str)
+char	**remove_space(char **str)
 {
 	int		i;
 	int		j;
 	char	*tmp;
 
+	i = -1;
+	while (str[++i])
+	{
+		j = 0;
+		while (str[i][j] == 32)
+			++j;
+		tmp = ft_strdup(&str[i][j]);
+		free(str[i]);
+		str[i] = tmp;
+	}
+	return (str);
+}
+
+char	**remove_space_quote(char **str, char sep)
+{
+	int		i;
+	int		j;
+	char	*tmp;
+
+	if (sep == 32)
+		return (remove_space(str));
 	i = -1;
 	while (str[++i])
 	{
@@ -82,7 +100,7 @@ char	**remove_space_quote(char **str)
 			str[i] = ft_strdup("||");
 			continue ;
 		}
-		while (str[i][j] && str[i][j] == '|' || str[i][j] == 32)
+		while (str[i][j] && (str[i][j] == '|' || str[i][j] == 32))
 			++j;
 		tmp = ft_strdup(&str[i][j]);
 		free(str[i]);

@@ -6,7 +6,7 @@
 /*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 00:06:54 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/10 02:17:49 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/14 02:50:40 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_prev_valid(int i, char *str)
 	return (0);
 }
 
-int	get_row(char *str)
+int	get_row(char *str, char sep)
 {
 	int	i;
 	int	row;
@@ -47,15 +47,15 @@ int	get_row(char *str)
 	row = 0;
 	while (str[++i])
 	{
-		while (str[i] && str[i] != '|')
+		while (str[i] && str[i] != sep)
 			++i;
-		if (!check_prev_valid(i, str) || str[i] != '|')
+		if (!check_prev_valid(i, str) || str[i] != sep)
 			++row;
 	}
 	return (row + 1);
 }
 
-int	get_col(char *str, int curr_row)
+int	get_col(char *str, int curr_row, char sep)
 {
 	int	i;
 	int	row;
@@ -66,13 +66,13 @@ int	get_col(char *str, int curr_row)
 	row = 0;
 	while (str[++i])
 	{
-		while (str[i] && str[i] != '|')
+		while (str[i] && str[i] != sep)
 		{
 			++i;
 			if (row == curr_row)
 				col++;
 		}
-		if (!check_prev_valid(i, str) || str[i] != '|')
+		if (!check_prev_valid(i, str) || str[i] != sep)
 			++row;
 		if (row == curr_row && i != 0)
 			col++;
@@ -80,7 +80,7 @@ int	get_col(char *str, int curr_row)
 	return (col + 1);
 }
 
-void	store_str(char *new, char *str, int curr_row)
+void	store_str(char *new, char *str, int curr_row, char sep)
 {
 	int	i;
 	int	row;
@@ -91,13 +91,13 @@ void	store_str(char *new, char *str, int curr_row)
 	row = 0;
 	while (str[++i])
 	{
-		while (str[i] && str[i] != '|')
+		while (str[i] && str[i] != sep)
 		{
 			if (row == curr_row)
 				new[j++] = str[i];
 			++i;
 		}
-		if (!check_prev_valid(i, str) || str[i] != '|')
+		if (!check_prev_valid(i, str) || str[i] != sep)
 			++row;
 		if (row == curr_row && i != 0)
 			new[j++] = str[i];
@@ -105,26 +105,26 @@ void	store_str(char *new, char *str, int curr_row)
 	new[j] = 0;
 }
 
-char	**ft_smart_split(char *str)
+char	**ft_smart_split(char *str, char sep)
 {
 	char	**new;
 	int		i;
 
-	new = ft_calloc(get_row(str), sizeof(char *));
+	new = ft_calloc(get_row(str, sep), sizeof(char *));
 	if (!new)
 		return (NULL);
 	i = -1;
-	while (++i < get_row(str) - 1)
+	while (++i < get_row(str, sep) - 1)
 	{
-		new[i] = ft_calloc(get_col(str, i), sizeof(char));
-		store_str(new[i], str, i);
+		new[i] = ft_calloc(get_col(str, i, sep), sizeof(char));
+		store_str(new[i], str, i, sep);
 	}
-	return (remove_space_quote(new));
+	return (remove_space_quote(new, sep));
 }
 
 // int main(void)
 // {
-// 	char str[100] = "echo \"dsaasd|dasdaa\" 12313";
+// 	char str[100] = "echo \"dsaasd|dasdaa\" | 12313";
 // 	char **s = ft_smart_split(str);
 // 	int i = -1;
 // 	printf("row %d\n", get_row(str));

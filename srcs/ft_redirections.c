@@ -6,7 +6,7 @@
 /*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 00:54:41 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/10 00:04:03 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/14 03:10:10 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ int	ft_contain_redir(t_shell *info, char **cmd)
 	{
 		if (!ft_strncmp(">", cmd[i], 2))
 		{
-			ft_redir_right(info, cmd, i);
+			// ft_redir_right(info, cmd, i);
 			return (1);
 		}
 		if (!ft_strncmp(">>", cmd[i], 3))
-			return (1);
+			return (2);
 		if (!ft_strncmp("<", cmd[i], 2))
-			return (1);
+			return (3);
 		if (!ft_strncmp("<<", cmd[i], 3))
-			return (1);
+			return (4);
 	}
 	return (0);
 }

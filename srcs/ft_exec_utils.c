@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 22:41:12 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/13 22:41:42 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/14 04:10:34 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*get_cmd_path(char *cmd)
 	return (NULL);
 }
 
-void	close_all_pipe(t_shell *info, int n_pipe)
+void	close_all_pipe(t_shell *info, int n_pipe, int type)
 {
 	int	i;
 
@@ -48,7 +48,11 @@ void	close_all_pipe(t_shell *info, int n_pipe)
 	{
 		close(info->fd[i][1]);
 		close(info->fd[i][0]);
+		if (type == FREE_PIPE)
+			free(info->fd[i]);
 	}
+	if (type == FREE_PIPE)
+		free(info->fd);
 }
 
 void	init_pipe_fd(t_shell *info, int size)
