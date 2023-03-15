@@ -6,7 +6,7 @@
 /*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 19:22:17 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/14 04:05:05 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/14 20:31:06 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
-# define R2 1
-# define R1 2
-# define L2 3
-# define L3 4
+# define R1 1
+# define R2 2
+# define L1 3
+# define L2 4
 # define FREE_PIPE 1
 
 //main data struct
@@ -38,6 +38,7 @@ typedef struct s_shell
 	int		**fd;
 	int		infile;
 	int		outfile;
+	int		here_doc;
 }	t_shell;
 
 //built-in cmd
@@ -52,10 +53,12 @@ void	ft_cd(t_shell *info, char **cmd);
 int		is_builtin_cmd(char **cmd, t_shell *info);
 
 //redirection
-int		ft_contain_redir(t_shell *info, char **cmd);
+void	set_infile_outfile(t_shell *info, char *cmd);
+int		is_redir(char *cmd);
 
 //execve
 void	ft_handle_cmd(t_shell *info);
+int		need_to_fork(t_shell *info, char **cmd);
 
 //execve utils
 void	close_all_pipe(t_shell *info, int n_pipe, int type);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suchua <suchua@student.42kl.edu.my>        +#+  +:+       +#+        */
+/*   By: suchua < suchua@student.42kl.edu.my>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 22:59:57 by suchua            #+#    #+#             */
-/*   Updated: 2023/03/08 17:50:42 by suchua           ###   ########.fr       */
+/*   Updated: 2023/03/14 19:03:57 by suchua           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_cd(t_shell *info, char **cmd)
 	i = 0;
 	while (ft_strncmp("PWD=", info->ms_env[i], 4))
 		++i;
-	set_oldpwd(info->ms_env[i], info);
+	set_oldpwd(info->ms_env[i] + 4, info);
 	free(info->ms_env[i]);
 	info->ms_env[i] = ft_strdup("PWD=");
 	info->ms_env[i] = ft_strjoin_free(info->ms_env[i], new_pwd);
